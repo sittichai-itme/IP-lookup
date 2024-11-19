@@ -1,4 +1,5 @@
 import requests
+import os
 
 def get_ip_location(ip_address):
     try:
@@ -10,10 +11,27 @@ def get_ip_location(ip_address):
     except Exception as e:
         return {"error": str(e)}
 
+def read_ips_from_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            ips = file.read().splitlines()
+            return [ip.strip() for ip in ips if ip.strip()]  
+    except FileNotFoundError:
+        return None  #
+    except Exception as e:
+        return {"error": str(e)}
+      
 def main():
-    while True:
-        ip_addresses = input("Enter IP addresses (comma separated): ")
-        ip_list = [ip.strip() for ip in ip_addresses.split(',')]
+    while True:  #
+        ip_file = 'ip.txt'
+        
+        
+        ip_list = read_ips_from_file(ip_file)
+        
+        if ip_list is None:
+            print("ip.txt not found. Please enter IP addresses manually.")
+            ip_addresses = input("Enter IP addresses (comma separated): ")
+            ip_list = [ip.strip() for ip in ip_addresses.split(',')]
         
         # ANSI escape codes for colors
         green_color = "\033[92m"    # Green
@@ -36,11 +54,10 @@ def main():
                 print(f"{yellow_color}Location:{reset_color} {location_info.get('loc')}")
                 print(f"{blue_color}Organization:{reset_color} {location_info.get('org')}")
 
-        # Prompt user to start again or quit
         restart = input("\nPress Enter to continue, type 'q' to exit: ")
         if restart.lower() == 'q':
-            print("Goodbye!")
-            break
+            print("")
+            break  
 
 if __name__ == "__main__":
     main()
