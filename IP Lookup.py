@@ -18,7 +18,7 @@ def main():
         # ANSI escape codes for colors
         green_color = "\033[92m"    # Green
         blue_color = "\033[94m"     # Blue
-        yellow_color = "\033[93m"   # Yellow (used as orange)
+        yellow_color = "\033[93m"   # Yellow
         pink_color = "\033[95m"     # Pink
         red_color = "\033[91m"      # Red
         reset_color = "\033[0m"     # Reset to default
